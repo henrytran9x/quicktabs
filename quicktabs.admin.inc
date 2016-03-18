@@ -88,7 +88,7 @@ function quicktabs_form($form, &$form_state, $formtype, $qt = NULL) {
     $qt->tabs[] = array();
   }
   $form_state['num_tabs'] = count($qt->tabs);
-  
+
   // If the "Remove" button was clicked for a tab, we need to remove that tab
   // from the form.
   if (isset($form_state['to_remove'])) {
@@ -299,12 +299,27 @@ function _quicktabs_form(array $tab, $qt) {
     '#delta' => 100,
   );
 
+  $form['title_prefix'] = array(
+    '#type' => 'textfield',
+    '#size' => '10',
+    '#default_value' => isset($tab['title_prefix']) ? $tab['title_prefix'] : '',
+    '#attributes' => array(
+      'placeholder' => t('Prefix')
+    )
+  );
   $form['title'] = array(
     '#type' => 'textfield',
     '#size' => '10',
     '#default_value' => isset($tab['title']) ? $tab['title'] : '',
   );
-
+  $form['title_suffix'] = array(
+    '#type' => 'textfield',
+    '#size' => '10',
+    '#default_value' => isset($tab['title_suffix']) ? $tab['title_suffix'] : '',
+    '#attributes' => array(
+      'placeholder' => t('Suffix')
+    )
+  );
   // Load all "contents" plugins to display a choice of content types.
   ctools_include('plugins');
   $contents = ctools_get_plugins('quicktabs', 'contents');
@@ -363,14 +378,14 @@ function theme_quicktabs_admin_form_tabs($variables) {
     t('Tab content'),
     t('Operations'),
   );
-
   foreach (element_children($tabs) as $key) {
     $tab = &$tabs[$key];
+    //krumo($tab);
     $tab['weight']['#attributes']['class'] = array('qt-tabs-weight');
 
     // tab settings fields
     $tab_fields = array(
-      array('data' => drupal_render($tab['title']), 'class' => array('qt-tab-title')),
+      array('data' => drupal_render($tab['title_prefix']).drupal_render($tab['title']).drupal_render($tab['title_suffix']), 'class' => array('qt-tab-title')),
       array('data' => drupal_render($tab['weight']), 'class' => array('qt-tab-weight')),
       array('data' => drupal_render($tab['type']), 'class' => array('qt-tab-type')),
     );
@@ -629,7 +644,9 @@ function _quicktabs_convert_form_to_quicktabs($form_state) {
   if (!empty($form_state['values']['tabs'])) {
     foreach ($form_state['values']['tabs'] as $j => $tab) {
       $formvalues_tabs[$j] = $tab[$tab['type']];
+      $formvalues_tabs[$j]['title_prefix'] = $tab['title_prefix'];
       $formvalues_tabs[$j]['title'] = $tab['title'];
+      $formvalues_tabs[$j]['title_suffix'] = $tab['title_suffix'];
       $formvalues_tabs[$j]['weight'] = $tab['weight'];
       $formvalues_tabs[$j]['type'] = $tab['type'];
       $weight[$j] = $tab['weight'];

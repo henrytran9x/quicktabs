@@ -102,7 +102,6 @@ class QuickViewContent extends QuickContent {
       }
       return array();
     }
-
     // Non-ajax rendering of a view.
     if ($this->rendered_content) {
       return $this->rendered_content;

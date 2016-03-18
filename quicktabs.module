@@ -639,6 +639,7 @@ function theme_qt_quicktabs_tabset($vars) {
     $item = array();
     if (is_array($vars['tabset']['tablinks'][$key])) {
       $tab = $vars['tabset']['tablinks'][$key];
+      $tab['#options']['html'] = TRUE;
       if ($key == $vars['tabset']['#options']['active']) {
         $item['class'] = array('active');
       }
@@ -646,7 +647,7 @@ function theme_qt_quicktabs_tabset($vars) {
       $variables['items'][] = $item;
     }
   }
-  return theme('item_list', $variables);
+   return theme('item_list',$variables);
 }
 
 /**
@@ -673,6 +674,7 @@ function theme_qt_quicktabs($variables) {
  */
 function theme_qt_accordion($variables) {
   $element = $variables['element'];
+
   $output = '<div '. drupal_attributes($element['#options']['attributes']) .'>';
   foreach ($element['divs'] as $div) {
     $output .= drupal_render($div);

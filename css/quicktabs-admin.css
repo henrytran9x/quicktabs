@@ -15,9 +15,9 @@
   margin-top: 3px;
 }
 #qt-tablist-table .qt-tab-title {
-  width: 130px;
   height: 125px;
 }
+#qt-tablist-table .qt-tab-title > .form-item{display: inline-block;}
 #qt-tablist-table .qt-tab-type,
 #qt-tablist-table .qt-tab-remove {
   width: 100px;

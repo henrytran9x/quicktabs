@@ -374,7 +374,8 @@ abstract class QuickContent implements QuickContentRenderable {
    * Constructor
    */
   public function __construct($item) {
-    $this->title = isset($item['title']) ? $item['title'] : '';
+    // Henry Tran Bug This $this->title set
+    $this->title = isset($item['title']) ? ((isset($item['title_prefix']) ? $item['title_prefix'] : '') . $item['title'] . (isset($item['title_suffix']) ? $item['title_suffix'] :'')) : '';
     // We do not need to store title, type or weight in the settings array, which
     // is for type-specific settings.
     unset($item['title'], $item['type'], $item['weight']);

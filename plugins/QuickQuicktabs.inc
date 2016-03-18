@@ -18,14 +18,14 @@ class QuickQuicktabs extends QuickRenderer {
       $qt_name = $quickset->getName();
       $settings = $quickset->getSettings();
       $contents = $quickset->getContents();
-
       $render_array['content'] = array(
         '#theme' => 'qt_quicktabs',
         '#options' => array('attributes' => array(
           'id' => 'quicktabs-' . $qt_name,
           'class' => 'quicktabs-wrapper quicktabs-style-' . drupal_html_class($settings['style']),
         )),
-        'tabs' => array('#theme' => 'qt_quicktabs_tabset', '#options' => array('active' => $active_tab, 'style' => drupal_html_class($settings['style'])), 'tablinks' => $tabs),
+        '#machine_name' => $qt_name,
+        'tabs' => array('#theme' => 'qt_quicktabs_tabset','#machine_name' => $qt_name ,'#options' => array('active' => $active_tab, 'style' => drupal_html_class($settings['style'])), 'tablinks' => $tabs),
         // The main content area, each quicktab container needs a unique id.
         'container' => array(
           '#prefix' => '<div id="quicktabs-container-' . $qt_name .'" class="quicktabs_main quicktabs-style-' . drupal_html_class($settings['style']) .'">',
